@@ -61,9 +61,13 @@ function getAlgorithm(keyBase64: string): string {
 
 // AES encryption, using mode: CBC/PKCS5Padding
 function aesEncrypt(plainText: string, key: string, iv: string): ArrayBuffer {
-  const cipher = createCipheriv("aes-256-cbc", key, iv);
-  const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
-  return encrypted.buffer;
+  const cipher = createCipheriv(getAlgorithm(key), key, iv);
+  cipher.setAutoPadding(true);
+  const encrypted = cipher.update(plainText);
+  const final = cipher.final();
+  const out = Buffer.concat([encrypted, final]);
+
+  return Uint8Array.from(out).buffer;
 }
 
 export function generateToken04(
