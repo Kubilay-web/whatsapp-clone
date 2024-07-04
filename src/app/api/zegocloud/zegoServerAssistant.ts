@@ -23,7 +23,7 @@ interface ErrorInfo {
   errorMessage: string; // Detailed description of the error code
 }
 
-function RndNum(a: number, b: number) {
+function RndNum(a, b) {
   // Generate a random number within the range of a to b
   return Math.ceil((a + (b - a)) * Math.random());
 }
